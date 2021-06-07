@@ -379,7 +379,7 @@ __device__ void HitCellMapping_g_d( HitParams hp,Hit& hit,  Sim_Args args ) {
 
 //if (hp.index ==0 ) printf("Tid: %d cellId: %ld  nhits: %ld \n" , threadIdx.x ,cellele, hp.nhits ) ; 
 
- if( cellele < 0) printf("cellele not found %ld \n", cellele ) ; 
+ if( cellele < 0) printf("cellele not found %lld \n", cellele ) ; 
   if( cellele >= 0 )  atomicAdd(&args.cells_energy[cellele+args.ncells*hp.index], hit.E()) ; 
 
 }
@@ -495,7 +495,7 @@ __host__ void CaloGpuGeneral::simulate_hits_gr(Sim_Args &  args ) {
   int nblocks= (threads_tot + blocksize-1 )/blocksize ;
   auto t0 = std::chrono::system_clock::now();
   hipLaunchKernelGGL(simulate_clean, dim3(nblocks), dim3(blocksize ), 0, 0,  args) ;
-  hipDeviceSynchronize() ;
+  gpuQ( hipDeviceSynchronize() );
   
   // Now main hit simulation find cell and populate hitcells_energy[] :
   blocksize=BLOCK_SIZE ;
@@ -503,14 +503,14 @@ __host__ void CaloGpuGeneral::simulate_hits_gr(Sim_Args &  args ) {
   nblocks= (threads_tot + blocksize-1 )/blocksize ;
   auto t1 = std::chrono::system_clock::now();
   hipLaunchKernelGGL(simulate_hits_de, dim3(nblocks), dim3(blocksize ), 0, 0, args ) ;
-  hipDeviceSynchronize() ;
+  gpuQ( hipDeviceSynchronize() );
   
   // Get result ct[] and hitcells_E[] (list of hitcells_ids/enengy )  
   
   nblocks = (args.ncells*args.nsims + blocksize -1 )/blocksize ;
   auto t2 = std::chrono::system_clock::now();
   hipLaunchKernelGGL(simulate_hits_ct, dim3(nblocks), dim3(blocksize ), 0, 0, args ) ; 
-  hipDeviceSynchronize() ;
+  gpuQ( hipDeviceSynchronize() );
   
   // cpy result back 
   auto t3 = std::chrono::system_clock::now();

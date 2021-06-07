@@ -82,7 +82,7 @@ TFCSShapeValidation::TFCSShapeValidation(TChain *chain, int layer, long seed)
    m_rd4h = CaloGpuGeneral::Rand4Hits_init(MAXHITS,MAXBINS,seed,true) ;
    auto t1 = std::chrono::system_clock::now();
   std::chrono::duration<double> diff = t1-t0 ;
-  std::cout<<"Time of Rabd4Hit_init: " << diff.count() << " s" << std::endl ;   
+  std::cout<<"Time of Rand4Hit_init: " << diff.count() << " s" << std::endl ;   
 #endif
 
 
@@ -393,11 +393,13 @@ void TFCSShapeValidation::LoopEvents(int pcabin=-1)
 		
 	auto ss = std::chrono::system_clock::now();
        if (m_debug >= 1) {
-         std::cout << "Simulate : " << validation.basesim()->GetTitle() <<" event="<<ievent<<" E="<<total_energy()<<" Ebin="<<pca()<<std::endl;
-         std::cout << "Simulate : " << "validation:"<<typeid(validation).name() <<", " <<typeid(*(validation.basesim())).name() <<" Title: " << validation.basesim()->GetTitle() 
-		<<" event="<<ievent<<" E="<<total_energy()<<" Ebin="<<pca()<<" validation: "
-		<< typeid(validation).name() <<" Pointer: " << &validation<<" Title: " << validation.GetTitle() <<std::endl;
-}
+          std::cout << "Simulate : " << validation.basesim()->GetTitle() << " event=" << ievent
+                    << " E=" << total_energy() << " Ebin=" << pca() << std::endl;
+          std::cout << "Simulate : " << typeid( *( validation.basesim() ) ).name()
+                    << " Title: " << validation.basesim()->GetTitle() << " event=" << ievent << " E=" << total_energy()
+                    << " Ebin=" << pca() << " validation: " << typeid( validation ).name()
+                    << " Pointer: " << &validation << " Title: " << validation.GetTitle() << std::endl;
+       }
 #ifdef USE_GPU
 	int vi =iv ;
 	int si = validation.simul().size();
