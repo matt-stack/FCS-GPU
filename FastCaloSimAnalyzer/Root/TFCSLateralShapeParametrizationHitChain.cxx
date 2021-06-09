@@ -28,8 +28,11 @@
 
 
 #include <chrono>
+#include <mutex>
 #include "FastCaloSimAnalyzer/TFCSShapeValidation.h"
 
+static bool FCS_dump_hitcount {false};
+static std::once_flag calledGetEnv {};
 
 //=============================================
 //======= TFCSLateralShapeParametrization =========
@@ -69,6 +72,9 @@ int TFCSLateralShapeParametrizationHitChain::get_number_of_hits(TFCSSimulationSt
 
 FCSReturnCode TFCSLateralShapeParametrizationHitChain::simulate(TFCSSimulationState& simulstate,const TFCSTruthState* truth, const TFCSExtrapolationState* extrapol)
 {
+  auto ss0 = simulstate.cells().size();
+  bool onGPU=false;
+
   // Call get_number_of_hits() only once, as it could contain a random number
     auto start = std::chrono::system_clock::now();
 	  int cs = calosample();
@@ -151,8 +157,8 @@ if(0) {
    } 
 } // debug
 
-
-         GeoLoadGpu * gld = (GeoLoadGpu *) simulstate.get_geold() ;	  
+        onGPU=true;
+        GeoLoadGpu * gld = (GeoLoadGpu *) simulstate.get_geold() ;	  
 
 	(*es).hits=nhit ;
 	(*es).tot_hits+=nhit ;
@@ -361,6 +367,20 @@ if(0) {
 }
    es->bin_index++ ; 
 #endif
+
+  std::call_once(calledGetEnv, [](){
+        if(const char* env_p = std::getenv("FCS_DUMP_HITCOUNT")) {
+          if  (strcmp(env_p,"1") == 0) {
+            FCS_dump_hitcount = true;
+          }
+        }
+  });
+  
+  if (FCS_dump_hitcount) {
+    printf(" HitCellCount: %3lu / %3lu   nhit: %4d%3s\n", simulstate.cells().size()-ss0,
+           simulstate.cells().size(), nhit, (onGPU ? "  *" : "") );
+  }
+   
   return FCSSuccess;
 }
 
