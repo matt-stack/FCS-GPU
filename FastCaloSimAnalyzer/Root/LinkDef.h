@@ -25,26 +25,26 @@
 
 #ifdef __ROOTCLING__
 
-#pragma link C++ namespace FCS+;
+#  pragma link C++ namespace FCS + ;
 
-#pragma link C++ class CaloGeometryFromFile+;
-#pragma link C++ class TFCS2DParametrization+;
-#pragma link C++ class TFCSAnalyzerBase+;
-#pragma link C++ class TFCSEnergyInterpolation+;
-#pragma link C++ class TFCSFlatNtupleMaker+;
-#pragma link C++ class TFCSHistoLateralShapeParametrizationFCal+;
-#pragma link C++ class TFCSHistoLateralShapeParametrization+;
-#pragma link C++ class TFCSHitCellMappingWiggle+;
-#pragma link C++ class TFCSInputValidationPlots+;
-#pragma link C++ class TFCSLateralShapeParametrizationHitChain+;
-#pragma link C++ class TFCSShapeValidation+;
-#pragma link C++ class TFCSValidationEnergy+;
-#pragma link C++ class TFCSValidationEnergyAndCells+;
-#pragma link C++ class TFCSValidationEnergyAndHits+;
-#pragma link C++ class TFCSValidationHitSpy+;
-#pragma link C++ class TFCSVertexZPositionStudies+;
-#pragma link C++ class TFCSWriteCellsToTree+;
+#  pragma link C++ class CaloGeometryFromFile + ;
+#  pragma link C++ class TFCS2DParametrization + ;
+#  pragma link C++ class TFCSAnalyzerBase + ;
+#  pragma link C++ class TFCSEnergyInterpolation + ;
+#  pragma link C++ class TFCSFlatNtupleMaker + ;
+#  pragma link C++ class TFCSHistoLateralShapeParametrizationFCal + ;
+#  pragma link C++ class TFCSHistoLateralShapeParametrization + ;
+#  pragma link C++ class TFCSHitCellMappingWiggle + ;
+#  pragma link C++ class TFCSInputValidationPlots + ;
+#  pragma link C++ class TFCSLateralShapeParametrizationHitChain + ;
+#  pragma link C++ class TFCSShapeValidation + ;
+#  pragma link C++ class TFCSValidationEnergy + ;
+#  pragma link C++ class TFCSValidationEnergyAndCells + ;
+#  pragma link C++ class TFCSValidationEnergyAndHits + ;
+#  pragma link C++ class TFCSValidationHitSpy + ;
+#  pragma link C++ class TFCSVertexZPositionStudies + ;
+#  pragma link C++ class TFCSWriteCellsToTree + ;
 
-#pragma link C++ struct FCS_truth+;
+#  pragma link C++ struct FCS_truth + ;
 
 #endif

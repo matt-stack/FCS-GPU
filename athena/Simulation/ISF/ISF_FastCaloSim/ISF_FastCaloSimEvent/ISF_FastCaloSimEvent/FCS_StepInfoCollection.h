@@ -30,19 +30,17 @@ namespace ISF_FCS_Parametrization {
   class FCS_StepInfoCollection : public DataVector<FCS_StepInfo> {
 
   public:
+    FCS_StepInfoCollection() {}
 
-          FCS_StepInfoCollection() {}
   private:
-
   };
 
-} // namespace ShowerLib
-
+} // namespace ISF_FCS_Parametrization
 
 #include "SGTools/CLASS_DEF.h"
 
-CLASS_DEF( ISF_FCS_Parametrization::FCS_StepInfoCollection , 1330006248 , 1 )
+CLASS_DEF( ISF_FCS_Parametrization::FCS_StepInfoCollection, 1330006248, 1 )
 
-SG_BASE(  ISF_FCS_Parametrization::FCS_StepInfoCollection, DataVector<ISF_FCS_Parametrization::FCS_StepInfo>);
+SG_BASE( ISF_FCS_Parametrization::FCS_StepInfoCollection, DataVector<ISF_FCS_Parametrization::FCS_StepInfo> );
 
 #endif

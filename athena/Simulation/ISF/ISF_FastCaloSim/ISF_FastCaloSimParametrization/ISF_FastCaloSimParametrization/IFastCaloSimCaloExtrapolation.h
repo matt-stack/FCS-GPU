@@ -11,15 +11,14 @@
 class TFCSTruthState;
 class TFCSExtrapolationState;
 
-static const InterfaceID IID_IFastCaloSimCaloExtrapolation("IFastCaloSimCaloExtrapolation", 1, 0);
+static const InterfaceID IID_IFastCaloSimCaloExtrapolation( "IFastCaloSimCaloExtrapolation", 1, 0 );
 
-class IFastCaloSimCaloExtrapolation : virtual public IAlgTool
-{
- public:
-   /** AlgTool interface methods */
-   static const InterfaceID& interfaceID() { return IID_IFastCaloSimCaloExtrapolation; }
+class IFastCaloSimCaloExtrapolation : virtual public IAlgTool {
+public:
+  /** AlgTool interface methods */
+  static const InterfaceID& interfaceID() { return IID_IFastCaloSimCaloExtrapolation; }
 
-   virtual void extrapolate(TFCSExtrapolationState& result,const TFCSTruthState* truth) = 0;
+  virtual void extrapolate( TFCSExtrapolationState& result, const TFCSTruthState* truth ) = 0;
 };
 
 #endif // IFastCaloSimCaloExtrapolation_H

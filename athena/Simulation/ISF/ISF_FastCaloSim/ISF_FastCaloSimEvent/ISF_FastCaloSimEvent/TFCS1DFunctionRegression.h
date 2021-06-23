@@ -12,31 +12,26 @@
 
 using namespace std;
 
-class TFCS1DFunctionRegression:public TFCS1DFunction
-{
-  public:
+class TFCS1DFunctionRegression : public TFCS1DFunction {
+public:
+  TFCS1DFunctionRegression(){};
+  ~TFCS1DFunctionRegression(){};
 
-    TFCS1DFunctionRegression() {};
-    ~TFCS1DFunctionRegression() {};
+  using TFCS1DFunction::rnd_to_fct;
+  virtual double rnd_to_fct( double rnd ) const;
+  double         regression_value( double uniform ) const;
+  void           set_weights( vector<vector<double>> fWeightMatrix0to1, vector<vector<double>> fWeightMatrix1to2 );
+  double         sigmoid( double ) const;
 
-    using TFCS1DFunction::rnd_to_fct;
-    virtual double rnd_to_fct(double rnd) const;
-    double  regression_value(double uniform) const;
-    void    set_weights(vector<vector<double> > fWeightMatrix0to1, vector<vector<double> > fWeightMatrix1to2);
-    double  sigmoid(double) const;
+private:
+  vector<vector<double>> m_fWeightMatrix0to1;
+  vector<vector<double>> m_fWeightMatrix1to2;
 
-  private:
-
-    vector<vector<double> > m_fWeightMatrix0to1;
-    vector<vector<double> > m_fWeightMatrix1to2;
-
-
-  ClassDef(TFCS1DFunctionRegression,1)  //TFCS1DFunctionRegression
-
+  ClassDef( TFCS1DFunctionRegression, 1 ) // TFCS1DFunctionRegression
 };
 
-#if defined(__ROOTCLING__) && defined(__FastCaloSimStandAlone__)
-#pragma link C++ class TFCS1DFunctionRegression+;
+#if defined( __ROOTCLING__ ) && defined( __FastCaloSimStandAlone__ )
+#  pragma link C++ class TFCS1DFunctionRegression + ;
 #endif
 
 #endif

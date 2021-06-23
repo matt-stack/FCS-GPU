@@ -9,7 +9,5 @@
 //======= TFCSEnergyParametrization =========
 //=============================================
 
-TFCSEnergyParametrization::TFCSEnergyParametrization(const char* name, const char* title):TFCSParametrization(name,title)
-{
-}
-
+TFCSEnergyParametrization::TFCSEnergyParametrization( const char* name, const char* title )
+    : TFCSParametrization( name, title ) {}

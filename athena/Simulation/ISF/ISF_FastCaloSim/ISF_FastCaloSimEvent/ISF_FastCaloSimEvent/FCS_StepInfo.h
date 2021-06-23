@@ -13,7 +13,7 @@
 // CLHEP include for Hep3Vector
 #include "CLHEP/Vector/ThreeVector.h"
 
-//include for Hit
+// include for Hit
 //#include "LArSimEvent/LArHit.h"
 #include "TileSimEvent/TileHit.h"
 
@@ -38,37 +38,41 @@ namespace ISF_FCS_Parametrization {
    *
    */
 
-  class FCS_StepInfo: public TileHit {
+  class FCS_StepInfo : public TileHit {
 
   public:
-
     //! empty default constructor
-    FCS_StepInfo(): m_pos(), m_valid(false), m_detector(-1) {}
+    FCS_StepInfo() : m_pos(), m_valid( false ), m_detector( -1 ) {}
 
-    FCS_StepInfo(CLHEP::Hep3Vector l_vec, Identifier l_cell, double l_energy, double l_time, bool l_valid, int l_detector): TileHit(l_cell,l_energy, l_time) { m_pos = l_vec; m_valid = l_valid, m_detector = l_detector; }
+    FCS_StepInfo( CLHEP::Hep3Vector l_vec, Identifier l_cell, double l_energy, double l_time, bool l_valid,
+                  int l_detector )
+        : TileHit( l_cell, l_energy, l_time ) {
+      m_pos   = l_vec;
+      m_valid = l_valid, m_detector = l_detector;
+    }
 
-    //FCS_StepInfo(const FCS_StepInfo& first, const FCS_StepInfo& second);
+    // FCS_StepInfo(const FCS_StepInfo& first, const FCS_StepInfo& second);
 
     /* access functions */
 
     //! set position
-    inline void setP(const CLHEP::Hep3Vector& p) { m_pos = p; }
+    inline void setP( const CLHEP::Hep3Vector& p ) { m_pos = p; }
     //! set x position
-    inline void setX(const double x) { return m_pos.setX(x); }
+    inline void setX( const double x ) { return m_pos.setX( x ); }
     //! set y position
-    inline void setY(const double y) { return m_pos.setY(y); }
+    inline void setY( const double y ) { return m_pos.setY( y ); }
     //! set z position
-    inline void setZ(const double z) { return m_pos.setZ(z); }
+    inline void setZ( const double z ) { return m_pos.setZ( z ); }
     //! set depoisted energy
-    //inline void setE(const double t) { m_energy = t; }
+    // inline void setE(const double t) { m_energy = t; }
     //! set time
-    //inline void setTime(const double t) { m_time = t; }
+    // inline void setTime(const double t) { m_time = t; }
     //! set validity
-    inline void setValid(const bool flag) { m_valid = flag; }
+    inline void setValid( const bool flag ) { m_valid = flag; }
     //! set identifier
-    //inline void setIdentifier(const Identifier id) { m_ID = id; }
+    // inline void setIdentifier(const Identifier id) { m_ID = id; }
 
-    inline void setDetector(const int det) { m_detector = det; }
+    inline void setDetector( const int det ) { m_detector = det; }
     //! return spacial position
     inline CLHEP::Hep3Vector position() const { return m_pos; }
     //! return x position
@@ -78,9 +82,9 @@ namespace ISF_FCS_Parametrization {
     //! return z position
     inline double z() const { return m_pos.z(); }
     //! return deposited energy
-    //inline double dep() const { return m_energy; }
+    // inline double dep() const { return m_energy; }
     //! return time of hit
-    //inline double time() const { return time(); }
+    // inline double time() const { return time(); }
     //! return validity flag
     inline bool valid() const { return m_valid; }
 
@@ -89,18 +93,16 @@ namespace ISF_FCS_Parametrization {
     /* helper functions */
 
     //! return spactial distance squared
-    double diff2(const FCS_StepInfo& other) const;
+    double diff2( const FCS_StepInfo& other ) const;
 
     //! energy weighted sum
-    FCS_StepInfo& operator+=(const FCS_StepInfo& other );
+    FCS_StepInfo& operator+=( const FCS_StepInfo& other );
 
   private:
-
     // data members
-    CLHEP::Hep3Vector m_pos;    //!< spatial position
-    bool m_valid;        //!< flag, if hit is valid (if valid calculator?)
-    int m_detector;      //!< dictionary value in which detector the hit is
-
+    CLHEP::Hep3Vector m_pos;      //!< spatial position
+    bool              m_valid;    //!< flag, if hit is valid (if valid calculator?)
+    int               m_detector; //!< dictionary value in which detector the hit is
   };
 
 } // namespace ISF_FCS_Parametrization

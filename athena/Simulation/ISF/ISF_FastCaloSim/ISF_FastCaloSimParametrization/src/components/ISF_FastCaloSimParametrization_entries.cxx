@@ -14,10 +14,10 @@ DECLARE_TOOL_FACTORY( FastCaloSimGeometryHelper )
 DECLARE_TOOL_FACTORY( FastCaloSimCaloExtrapolation )
 
 DECLARE_ALGORITHM_FACTORY( FastCaloSimParamAlg )
-DECLARE_ALGORITHM_FACTORY( ISF_HitAnalysis) 
-DECLARE_NAMESPACE_SERVICE_FACTORY( ISF , NativeFastCaloSimSvc )
+DECLARE_ALGORITHM_FACTORY( ISF_HitAnalysis )
+DECLARE_NAMESPACE_SERVICE_FACTORY( ISF, NativeFastCaloSimSvc )
 
-//DECLARE_FACTORY_ENTRIES(FastCaloSimParamAlg) {
+// DECLARE_FACTORY_ENTRIES(FastCaloSimParamAlg) {
 //}
 
 DECLARE_FACTORY_ENTRIES( ISF_FastCaloSimParametrization ) {
@@ -26,5 +26,5 @@ DECLARE_FACTORY_ENTRIES( ISF_FastCaloSimParametrization ) {
   DECLARE_TOOL( FastCaloSimGeometryHelper )
   DECLARE_TOOL( FastCaloSimCaloExtrapolation )
 
-  DECLARE_NAMESPACE_SERVICE( ISF , NativeFastCaloSimSvc )
+  DECLARE_NAMESPACE_SERVICE( ISF, NativeFastCaloSimSvc )
 }

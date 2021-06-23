@@ -10,14 +10,13 @@
 
 class CaloDetDescrManager;
 
-class CaloGeometryFromCaloDDM:public CaloGeometry {
-public :
-   CaloGeometryFromCaloDDM();
-   virtual ~CaloGeometryFromCaloDDM();
-   
-   virtual bool LoadGeometryFromCaloDDM(const CaloDetDescrManager* calo_dd_man);
-   virtual bool LoadFCalChannelMapFromFCalDDM(const FCALDetectorManager* fcal_dd_man);
+class CaloGeometryFromCaloDDM : public CaloGeometry {
+public:
+  CaloGeometryFromCaloDDM();
+  virtual ~CaloGeometryFromCaloDDM();
+
+  virtual bool LoadGeometryFromCaloDDM( const CaloDetDescrManager* calo_dd_man );
+  virtual bool LoadFCalChannelMapFromFCalDDM( const FCALDetectorManager* fcal_dd_man );
 };
 
 #endif
-

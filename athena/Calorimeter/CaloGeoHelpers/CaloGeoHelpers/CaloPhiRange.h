@@ -25,43 +25,37 @@
  *
  */
 
-
-class CaloPhiRange
-{
+class CaloPhiRange {
 public:
-    static double twopi ();
-    static double phi_min ();
-    static double phi_max ();
+  static double twopi();
+  static double phi_min();
+  static double phi_max();
 
-    static double fix ( double phi );
+  static double fix( double phi );
 
-    /** @brief simple phi1 - phi2 calculation, but result is fixed to respect range.
-     */
-    static double diff ( double phi1,  double phi2 );
+  /** @brief simple phi1 - phi2 calculation, but result is fixed to respect range.
+   */
+  static double diff( double phi1, double phi2 );
 
-    static void print();
+  static void print();
 
 private:
-    
-    // This is the real hard-coded choice :
+  // This is the real hard-coded choice :
 #if 0
     // Doesn't work yet with all the compilers we're supporting.
     static CONSTEXPR double m_phi_min = -M_PI;
     static CONSTEXPR double m_twopi = 2*M_PI;
     static CONSTEXPR double m_phi_max = M_PI;
 #endif
-    static const double m_phi_min;
-    static const double m_twopi;
-    static const double m_phi_max;
+  static const double m_phi_min;
+  static const double m_twopi;
+  static const double m_phi_max;
 };
 
-inline double CaloPhiRange::twopi()
-{ return m_twopi;}
+inline double CaloPhiRange::twopi() { return m_twopi; }
 
-inline double CaloPhiRange::phi_min()
-{ return m_phi_min;}
+inline double CaloPhiRange::phi_min() { return m_phi_min; }
 
-inline double CaloPhiRange::phi_max()
-{ return m_phi_max;}
+inline double CaloPhiRange::phi_max() { return m_phi_max; }
 
 #endif // CALODETDESCR_CALOPHIRANGE_H

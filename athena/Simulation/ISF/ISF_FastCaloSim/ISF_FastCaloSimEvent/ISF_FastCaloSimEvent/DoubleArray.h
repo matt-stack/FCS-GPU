@@ -11,17 +11,16 @@
 class DoubleArray : public TObject, public TArrayD {
 
 public:
-   DoubleArray();
-   DoubleArray( int );
-   ~DoubleArray();
+  DoubleArray();
+  DoubleArray( int );
+  ~DoubleArray();
 
 private:
-
-   ClassDef( DoubleArray, 1 )
+  ClassDef( DoubleArray, 1 )
 };
 
-#if defined(__ROOTCLING__) && defined(__FastCaloSimStandAlone__)
-#pragma link C++ class DoubleArray+;
+#if defined( __ROOTCLING__ ) && defined( __FastCaloSimStandAlone__ )
+#  pragma link C++ class DoubleArray + ;
 #endif
 
 #endif
