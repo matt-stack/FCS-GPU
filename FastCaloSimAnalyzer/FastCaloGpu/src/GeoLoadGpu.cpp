@@ -118,7 +118,7 @@ bool GeoLoadGpu::LoadGpu() {
     // sanity check/test
     hipLaunchKernelGGL( testHello, dim3( 1 ), dim3( 1 ), 0, 0 );
     hipLaunchKernelGGL( testCell, dim3( 1 ), dim3( 1 ), 0, 0, m_cells_g, 1872 );
-    hipDeviceSynchronize();
+    gpuQ( hipDeviceSynchronize() );
 
     std::cout << " ID of 2000's cell " << m_cellid_array[2000] << std::endl;
     Identifier Id = m_cellid_array[2000];
@@ -187,28 +187,28 @@ bool GeoLoadGpu::LoadGpu() {
 
   // Now copy this to GPU and set the staic memner to thsi pointer
   GeoGpu* Gptr;
-  hipMalloc( (void**)&Gptr, sizeof( GeoGpu ) );
-  hipMemcpy( Gptr, &geo_gpu_h, sizeof( GeoGpu ), hipMemcpyHostToDevice );
+  gpuQ( hipMalloc( (void**)&Gptr, sizeof( GeoGpu ) ) );
+  gpuQ( hipMemcpy( Gptr, &geo_gpu_h, sizeof( GeoGpu ), hipMemcpyHostToDevice ) );
 
   Geo_g = Gptr;
 
   // more test for region grids
   if ( 0 ) {
     hipLaunchKernelGGL( testGeo, dim3( 1 ), dim3( 1 ), 0, 0, m_cells_g, m_regions_g, m_ncells, m_nregions, 14, 0, 32 );
-    hipDeviceSynchronize();
     hipError_t err = hipGetLastError();
     if ( err != hipSuccess ) {
       std::cout << hipGetErrorString( err ) << std::endl;
       return false;
     }
+    gpuQ( hipDeviceSynchronize() );
 
     hipLaunchKernelGGL( testGeo_g, dim3( 1 ), dim3( 1 ), 0, 0, Geo_g, 14, 0, 32 );
-    hipDeviceSynchronize();
     err = hipGetLastError();
     if ( err != hipSuccess ) {
       std::cout << hipGetErrorString( err ) << std::endl;
       return false;
     }
+    gpuQ( hipDeviceSynchronize() );
 
     std::cout << "TesGeo finished " << std::endl;
 

@@ -27,11 +27,11 @@ public:
   ~Rand4Hits() {
     gpuQ( hipFree( m_rand_ptr ) );
     HIPRAND_CALL( hiprandDestroyGenerator( m_gen ) );
-    hipFree( m_cells_energy );
-    hipFree( m_cell_e );
-    hipFree( m_ct );
-    hipFree( m_hitparams );
-    hipFree( m_simbins );
+    gpuQ( hipFree( m_cells_energy ) );
+    gpuQ( hipFree( m_cell_e ) );
+    gpuQ( hipFree( m_ct ) );
+    gpuQ( hipFree( m_hitparams ) );
+    gpuQ( hipFree( m_simbins ) );
   };
 
   // float *  HitsRandGen(unsigned int nhits, unsigned long long seed ) ;

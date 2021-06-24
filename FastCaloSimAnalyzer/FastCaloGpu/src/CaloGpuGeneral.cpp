@@ -455,6 +455,11 @@ __host__ void CaloGpuGeneral::simulate_hits_gr( Sim_Args& args ) {
   int  nblocks     = ( threads_tot + blocksize - 1 ) / blocksize;
   auto t0          = std::chrono::system_clock::now();
   hipLaunchKernelGGL( simulate_clean, dim3( nblocks ), dim3( blocksize ), 0, 0, args );
+  err = hipGetLastError();
+  if ( err != hipSuccess ) {
+    std::cout << "Error launching simulate_clean: " << hipGetErrorString( err ) << std::endl;
+    exit(1);
+  }
   gpuQ( hipDeviceSynchronize() );
 
   // Now main hit simulation find cell and populate hitcells_energy[] :
@@ -463,6 +468,11 @@ __host__ void CaloGpuGeneral::simulate_hits_gr( Sim_Args& args ) {
   nblocks     = ( threads_tot + blocksize - 1 ) / blocksize;
   auto t1     = std::chrono::system_clock::now();
   hipLaunchKernelGGL( simulate_hits_de, dim3( nblocks ), dim3( blocksize ), 0, 0, args );
+  err = hipGetLastError();
+  if ( err != hipSuccess ) {
+    std::cout << "Error launching simulate_hits_de: " << hipGetErrorString( err ) << std::endl;
+    exit(1);
+  }
   gpuQ( hipDeviceSynchronize() );
 
   // Get result ct[] and hitcells_E[] (list of hitcells_ids/enengy )
@@ -470,6 +480,11 @@ __host__ void CaloGpuGeneral::simulate_hits_gr( Sim_Args& args ) {
   nblocks = ( args.ncells * args.nsims + blocksize - 1 ) / blocksize;
   auto t2 = std::chrono::system_clock::now();
   hipLaunchKernelGGL( simulate_hits_ct, dim3( nblocks ), dim3( blocksize ), 0, 0, args );
+  err = hipGetLastError();
+  if ( err != hipSuccess ) {
+    std::cout << "Error launching simulate_hits_ct: " << hipGetErrorString( err ) << std::endl;
+    exit(1);
+  }
   gpuQ( hipDeviceSynchronize() );
 
   // cpy result back
