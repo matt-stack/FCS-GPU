@@ -19,6 +19,7 @@ namespace CaloGpuGeneral {
     std::chrono::duration<double> t_sim_A{0};
     std::chrono::duration<double> t_sim_ct{0};
     std::chrono::duration<double> t_sim_cp{0};
+    unsigned int count{0};
     KernelTime() = default;
     KernelTime( std::chrono::duration<double> t1, std::chrono::duration<double> t2, std::chrono::duration<double> t3,
                 std::chrono::duration<double> t4 )
@@ -28,6 +29,7 @@ namespace CaloGpuGeneral {
       t_sim_A += rhs.t_sim_A;
       t_sim_ct += rhs.t_sim_ct;
       t_sim_cp += rhs.t_sim_cp;
+      ++count;
       return *this;
     }
   };

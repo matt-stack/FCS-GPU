@@ -13,11 +13,15 @@
 #include "CU_BigMem.h"
 
 #include <chrono>
+#include <mutex>
 
 static CaloGpuGeneral::KernelTime timing;
 
-#define BLOCK_SIZE 256
+#define DEFAULT_BLOCK_SIZE 256
 #define NLOOPS 1
+
+static std::once_flag calledGetEnv {};
+static int BLOCK_SIZE{DEFAULT_BLOCK_SIZE};
 
 #define M_PI 3.14159265358979323846
 #define M_2PI 6.28318530717958647692
@@ -247,10 +251,21 @@ __host__ void CaloGpuGeneral::Rand4Hits_finish( void* rd4h ) {
   if ( (Rand4Hits*)rd4h ) delete (Rand4Hits*)rd4h;
   if ( CU_BigMem::bm_ptr ) delete CU_BigMem::bm_ptr;
 
-  std::cout << "time kernel sim_clean: " << timing.t_sim_clean.count() << std::endl;
-  std::cout << "time kernel sim_A:     " << timing.t_sim_A.count() << std::endl;
-  std::cout << "time kernel sim_ct:    " << timing.t_sim_ct.count() << std::endl;
-  std::cout << "time kernel sim_cp:    " << timing.t_sim_cp.count() << std::endl;
+  if (timing.count > 0) {
+    std::cout << "kernel timing\n";
+    printf("%12s %15s %15s\n","kernel","total /s","avg launch /s");
+    printf("%12s %15.8f %15.8f\n","sim_clean",timing.t_sim_clean.count(),
+           timing.t_sim_clean.count()/timing.count);
+    printf("%12s %15.8f %15.8f\n","sim_A",timing.t_sim_A.count(),
+           timing.t_sim_A.count()/timing.count);
+    printf("%12s %15.8f %15.8f\n","sim_ct",timing.t_sim_ct.count(),
+           timing.t_sim_ct.count()/timing.count);
+    printf("%12s %15.8f %15.8f\n","sim_cp",timing.t_sim_cp.count(),
+           timing.t_sim_cp.count()/timing.count);
+    printf("%12s %15d\n","launch count",timing.count);
+  } else {
+    std::cout << "no kernel timing available" << std::endl;
+  }
 }
 
 __host__ void CaloGpuGeneral::load_hitsim_params( void* rd4h, HitParams* hp, long* simbins, int bins ) {
@@ -427,6 +442,17 @@ __global__ void simulate_hits_ct( const Sim_Args args ) {
 
 __host__ void CaloGpuGeneral::simulate_hits_gr( Sim_Args& args ) {
 
+  std::call_once(calledGetEnv, [](){
+        if(const char* env_p = std::getenv("FCS_BLOCK_SIZE")) {
+          std::string bs(env_p);
+          BLOCK_SIZE = std::stoi(bs);
+        }
+        if (BLOCK_SIZE != DEFAULT_BLOCK_SIZE) {
+          std::cout << "kernel BLOCK_SIZE: " << BLOCK_SIZE << std::endl;
+        }
+
+  });
+  
   // get Randowm numbers ptr , generate if need
   long       nhits = args.nhits;
   Rand4Hits* rd4h  = (Rand4Hits*)args.rd4h;
@@ -443,8 +469,10 @@ __host__ void CaloGpuGeneral::simulate_hits_gr( Sim_Args& args ) {
   args.simbins   = rd4h->get_simbins();
   args.hitparams = rd4h->get_hitparams();
 
-  //
-
+  // size_t free, total;
+  // gpuQ( hipMemGetInfo( &free, &total ) );
+  // std::cout << "GPU memory used: " << total-free << "  free: " << free << "\n";
+  
   hipError_t err = hipGetLastError();
 
   // clean up  for results ct[MAX_SIM] and hitcells_E[MAX_SIM*MAXHITCT]
