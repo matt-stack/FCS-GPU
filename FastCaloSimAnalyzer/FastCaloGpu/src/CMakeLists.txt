@@ -44,7 +44,8 @@ add_library(${FastCaloGpu_LIB} SHARED ${FastCaloGpu_Srcs}  )
 
 target_include_directories(${FastCaloGpu_LIB} PRIVATE ../FastCaloGpu/  )
 
-target_link_libraries(${FastCaloGpu_LIB}  PUBLIC ${CUDA_curand_LIBRARY})
+#target_link_libraries(${FastCaloGpu_LIB}  PUBLIC ${CUDA_curand_LIBRARY})
+target_link_libraries(${FastCaloGpu_LIB}  PUBLIC /home/u00u5fje558OwzEfl1357/2_NVHPC/Linux_x86_64/22.3/math_libs/11.6/lib64/libcurand.so)
 if(USE_STDPAR)
   target_link_libraries(${FastCaloGpu_LIB} PUBLIC  ${CUDA_LIBRARIES} )
   target_compile_definitions(${FastCaloGpu_LIB} PRIVATE -DUSE_STDPAR -DSTDPAR_TARGET=${STDPAR_TARGET} )

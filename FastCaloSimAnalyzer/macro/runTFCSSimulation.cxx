@@ -271,6 +271,8 @@ int runTFCSSimulation( int pdgid = 22, int int_E = 65536, double etamin = 0.2, i
   //////////////////////////////////////////////////////////
   analyze->LoopEvents( -1 );
 
+  return 0;
+
   auto t3 = std::chrono::system_clock::now();
 
   if ( plotfilename != "" ) {

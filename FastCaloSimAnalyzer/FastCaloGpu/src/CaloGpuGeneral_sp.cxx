@@ -102,7 +102,11 @@ namespace CaloGpuGeneral_stdpar {
                     [=](unsigned int i) {
                       // printf("ct: %p %p\n",(void*)args.hitcells_ct,(void*)args.hitcells_E);
                       if ( args.cells_energy[i] > 0 ) {
-                        unsigned int ct = (*(args.hitcells_ct))++;
+                        //unsigned int ct = (*(args.hitcells_ct))++;
+			// mstack changes
+			atomicAdd(args.hitcells_ct, 1);
+                        unsigned int ct = *(args.hitcells_ct);
+			//end changes
                         Cell_E              ce;
                         ce.cellid           = i;
                       #ifdef _NVHPC_STDPAR_NONE
@@ -138,12 +142,13 @@ namespace CaloGpuGeneral_stdpar {
 
     auto t2 = std::chrono::system_clock::now();
     simulate_ct( args );
-
+cudaDeviceSynchronize();
     nvtxRangeEnd(r3);
     auto t3 = std::chrono::system_clock::now();
     nvtxRangeId_t r4 = nvtxRangeStartA("sim_cp part 1");
 
     // pass result back
+//    cudaMemcpy()
     args.ct = *args.hitcells_ct;
 
     nvtxRangeEnd(r4);

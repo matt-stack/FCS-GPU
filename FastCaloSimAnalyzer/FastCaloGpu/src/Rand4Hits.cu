@@ -5,7 +5,8 @@
 #include "Rand4Hits.h"
 #include "gpuQ.h"
 #include <iostream>
-#include <curand.h>
+//#include <curand.h>
+#include "/home/u00u5fje558OwzEfl1357/2_NVHPC/Linux_x86_64/22.3/math_libs/11.6/targets/x86_64-linux/include/curand.h"
 
 #include "Rand4Hits_cpu.cxx"
 

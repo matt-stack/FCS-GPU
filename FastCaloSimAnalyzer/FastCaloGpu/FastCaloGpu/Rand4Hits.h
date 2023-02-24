@@ -57,7 +57,9 @@ public:
   Cell_E* get_cell_e_h()          { return m_cell_e_h; };
 
 #ifdef USE_STDPAR
-  std::atomic<int>* get_ct() { return m_ct; };
+  // mstack changes
+  //std::atomic<int>* get_ct() { return m_ct; };
+  int* get_ct() { return m_ct; };
 #else
   int* get_ct() { return m_ct; };
 #endif
@@ -93,7 +95,9 @@ private:
   CELL_ENE_T*  m_cells_energy {0};
   Cell_E* m_cell_e {0};
 #ifdef USE_STDPAR
-  std::atomic<int>*    m_ct {0};
+  // mstack changes
+  //std::atomic<int>*    m_ct {0};
+  int*    m_ct {0};
 #else
   int*    m_ct {0};
 #endif

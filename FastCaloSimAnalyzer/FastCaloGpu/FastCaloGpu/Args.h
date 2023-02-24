@@ -108,7 +108,9 @@ typedef struct Chain0_Args {
   // unsigned long * hitcells ;//GPU pointer for hit cell index for each hit
   // unsigned long * hitcells_l ; // GPU pointer for uniq  hitcell indexes
 #ifdef USE_STDPAR
-  std::atomic<int>*  hitcells_ct;
+  // mstack change
+  //std::atomic<int>*  hitcells_ct;
+  int*               hitcells_ct; // GPU pointer for number of uniq hit cells
 #else
   int*               hitcells_ct; // GPU pointer for number of uniq hit cells
 #endif
