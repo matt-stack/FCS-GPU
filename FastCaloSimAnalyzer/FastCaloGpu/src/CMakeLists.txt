@@ -50,8 +50,9 @@ if(USE_STDPAR)
   target_link_libraries(${FastCaloGpu_LIB} PUBLIC  ${CUDA_LIBRARIES} )
   target_compile_definitions(${FastCaloGpu_LIB} PRIVATE -DUSE_STDPAR -DSTDPAR_TARGET=${STDPAR_TARGET} )
 
-  target_compile_options(${FastCaloGpu_LIB} PRIVATE $<$<COMPILE_LANG_AND_ID:CXX,GNU>:
-      ${STDPAR_DIRECTIVE}> )
+  #target_compile_options(${FastCaloGpu_LIB} PRIVATE $<$<COMPILE_LANG_AND_ID:CXX,GNU>:
+  target_compile_options(${FastCaloGpu_LIB} PRIVATE $<$<COMPILE_LANG_AND_ID:CXX,NVHPC>:
+      ${STDPAR_DIRECTIVE} -Minfo=stdpar> )
   target_link_options(${FastCaloGpu_LIB} PRIVATE ${STDPAR_DIRECTIVE})
 
 endif()

@@ -17,6 +17,7 @@ set(RNDGEN_CPU OFF CACHE BOOL "Generate Random Numbers on CPU")
 set(USE_STDPAR OFF CACHE BOOL "Use std::par")
 set(STDPAR_TARGET "gpu" CACHE STRING "target for std::par. should be gpu,multicore or cpu")
 set(DUMP_HITCELLS OFF CACHE BOOL "printout hit cell contents")
+SET(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 
 if ( USE_STDPAR )
   if ( ${STDPAR_TARGET} STREQUAL "cpu" )
